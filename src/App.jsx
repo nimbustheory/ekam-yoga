@@ -48,11 +48,18 @@ const STUDIO_CONFIG = {
 // ═══════════════════════════════════════════════════════════════
 //  STUDIO IMAGES — Ekam Yoga CDN URLs
 // ═══════════════════════════════════════════════════════════════
+const gradientFallback = "linear-gradient(135deg, hsl(220,45%,38%) 0%, hsl(220,45%,22%) 100%)";
 const STUDIO_IMAGES = {
   logo: "https://images.squarespace-cdn.com/content/v1/65e8d27df707f36c84103799/0fb3a311-358a-4b53-8436-058f09d74903/EY_8711_Logo_1e242b_750w.png?format=300w",
+  home: "https://images.squarespace-cdn.com/content/v1/65e8d27df707f36c84103799/4d4b7c7e-92ca-464a-8649-b3f851fbd9dc/SpeedCreative-EkamFall2022-2748_2500w.jpg",
   hero: "https://images.squarespace-cdn.com/content/v1/65e8d27df707f36c84103799/4d4b7c7e-92ca-464a-8649-b3f851fbd9dc/SpeedCreative-EkamFall2022-2748_2500w.jpg",
   classesHeader: "https://images.squarespace-cdn.com/content/v1/65e8d27df707f36c84103799/4d21e9ca-37a4-4cab-bd7d-6ccd38a65601/ey_12397_2b_1_header_2400x1000.jpg",
   classesFooter: "https://images.squarespace-cdn.com/content/v1/65e8d27df707f36c84103799/8cac5582-1fbf-4ad3-b8d1-7889e01dbf85/EY_12397_4A_Classes_2_Footer_2400x1000_1.jpg",
+  scheduleHeader: "https://images.squarespace-cdn.com/content/v1/65e8d27df707f36c84103799/4d21e9ca-37a4-4cab-bd7d-6ccd38a65601/ey_12397_2b_1_header_2400x1000.jpg",
+  practiceHeader: "https://images.squarespace-cdn.com/content/v1/65e8d27df707f36c84103799/8cac5582-1fbf-4ad3-b8d1-7889e01dbf85/EY_12397_4A_Classes_2_Footer_2400x1000_1.jpg",
+  communityHeader: "https://images.squarespace-cdn.com/content/v1/65e8d27df707f36c84103799/f7603226-fdc0-4d80-9b0f-f0cc35d2e185/ey_10627_4b_1_membership2_144.jpg",
+  teachersHeader: gradientFallback,
+  eventsHeader: "https://images.squarespace-cdn.com/content/v1/65e8d27df707f36c84103799/075f9362-c854-44eb-876d-bdb934f2ab98/ey_secondarypageheaders2_144.jpg",
   membershipHeader: "https://images.squarespace-cdn.com/content/v1/65e8d27df707f36c84103799/075f9362-c854-44eb-876d-bdb934f2ab98/ey_secondarypageheaders2_144.jpg",
   studioInterior: "https://images.squarespace-cdn.com/content/v1/65e8d27df707f36c84103799/f7603226-fdc0-4d80-9b0f-f0cc35d2e185/ey_10627_4b_1_membership2_144.jpg",
   teachers: {
@@ -258,9 +265,9 @@ const AppContext = createContext(null);
 // ═══════════════════════════════════════════════════════════════
 //  SHARED COMPONENTS
 // ═══════════════════════════════════════════════════════════════
-function PageHero({ image, title, subtitle, height = 180 }) {
+function PageHero({ image, title, subtitle, height = 220 }) {
   return (
-    <div style={{ position: "relative", height, overflow: "hidden", display: "flex", alignItems: "flex-end", padding: "20px 20px" }}>
+    <div style={{ position: "relative", height, overflow: "hidden", display: "flex", alignItems: "flex-end", padding: "20px 20px", marginBottom: "16px" }}>
       <img src={image} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.7)" }} onError={e => { e.target.style.display = "none"; }} />
       <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.15) 100%)" }} />
       <div style={{ position: "relative", zIndex: 1 }}>
@@ -482,7 +489,7 @@ function HomePage() {
       <section style={{ position: "relative", overflow: "hidden", padding: "32px 22px", minHeight: 240 }}>
         <img src={STUDIO_IMAGES.hero} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.7)" }} onError={e => { e.target.style.display = "none"; }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.15) 100%)" }} />
-        <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", justifyContent: "flex-end", minHeight: 176 }}>
+        <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", justifyContent: "flex-end", minHeight: 220 }}>
           <p style={{ color: T.success, fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.2em", marginBottom: 8 }}>
             {formatDateLong(today)}
           </p>
@@ -622,8 +629,9 @@ function SchedulePage() {
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const dayNames = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
   return (
-    <div style={{ padding: "0 16px" }}>
-      <PageTitle title="Schedule" subtitle="Reserve your spot — classes fill up fast" />
+    <div>
+      <PageHero image={STUDIO_IMAGES.scheduleHeader} title="Schedule" subtitle="Reserve your spot — classes fill up fast" />
+      <div style={{ padding: "0 16px" }}>
       <div style={{ display: "flex", gap: 4, marginBottom: 16, overflowX: "auto", paddingBottom: 4 }}>
         {days.map((d, i) => (
           <button key={d} onClick={() => setSelectedDay(i)} style={{ padding: "8px 14px", borderRadius: 8, border: "none", fontSize: 13, fontWeight: 600, cursor: "pointer", whiteSpace: "nowrap", background: selectedDay === i ? T.accent : T.bgDim, color: selectedDay === i ? "#fff" : T.textMuted }}>
@@ -653,6 +661,7 @@ function SchedulePage() {
           );
         })}
       </div>
+      </div>
     </div>
   );
 }
@@ -664,8 +673,9 @@ function PracticePage() {
   const handleSave = () => { setSaved("log"); setTimeout(() => setSaved(null), 2000); setReflection({ energy: 4, focus: 4, notes: "" }); };
 
   return (
-    <div style={{ padding: "0 16px" }}>
-      <PageTitle title="My Practice" subtitle="Track your journey and celebrate growth" />
+    <div>
+      <PageHero image={STUDIO_IMAGES.practiceHeader} title="My Practice" subtitle="Track your journey and celebrate growth" />
+      <div style={{ padding: "0 16px" }}>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: 20 }}>
         {[{ icon: Flame, val: 12, label: "Day Streak", bg: T.accentGhost, bdr: T.accentBorder, clr: T.accent },
           { icon: Star, val: 87, label: "Total Classes", bg: T.successGhost, bdr: T.successBorder, clr: T.success },
@@ -720,6 +730,7 @@ function PracticePage() {
           })}
         </div>
       )}
+      </div>
     </div>
   );
 }
@@ -727,8 +738,9 @@ function PracticePage() {
 function CommunityPage() {
   const { feedCelebrations, celebrateFeed } = useContext(AppContext);
   return (
-    <div style={{ padding: "0 16px" }}>
-      <PageTitle title="Community" subtitle="Celebrate milestones and lift each other up" />
+    <div>
+      <PageHero image={STUDIO_IMAGES.communityHeader} title="Community" subtitle="Celebrate milestones and lift each other up" />
+      <div style={{ padding: "0 16px" }}>
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
         {COMMUNITY_FEED.map(item => {
           const myC = feedCelebrations[item.id] || 0;
@@ -748,6 +760,7 @@ function CommunityPage() {
           );
         })}
       </div>
+      </div>
     </div>
   );
 }
@@ -756,7 +769,7 @@ function TeachersPage() {
   const [exp, setExp] = useState(null);
   return (
     <div>
-      <PageHero image={STUDIO_IMAGES.hero} title="Teachers" subtitle="Meet the Ekam Yoga teaching family" />
+      <PageHero image={STUDIO_IMAGES.teachersHeader} title="Teachers" subtitle="Meet the Ekam Yoga teaching family" />
       <div style={{ padding: "16px 16px 0", display: "flex", flexDirection: "column", gap: 12 }}>
         {TEACHERS.map(t => {
           const open = exp === t.id;
@@ -817,8 +830,9 @@ function MembershipPage() {
 
 function EventsPage() {
   return (
-    <div style={{ padding: "0 16px" }}>
-      <PageTitle title="Events & Workshops" subtitle="Deepen your practice and connect" />
+    <div>
+      <PageHero image={STUDIO_IMAGES.eventsHeader} title="Events & Workshops" subtitle="Deepen your practice and connect" />
+      <div style={{ padding: "0 16px" }}>
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
         {EVENTS.map(ev => (
           <div key={ev.id} style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: 14, padding: 18 }}>
@@ -837,6 +851,7 @@ function EventsPage() {
             </div>
           </div>
         ))}
+      </div>
       </div>
     </div>
   );
@@ -1274,7 +1289,7 @@ export default function App({ isEmbedded = false }) {
         </header>
 
         {/* Scrollable content */}
-        <main ref={contentRef} style={{ flex: 1, overflowY: "auto", paddingBottom: 8 }}>
+        <main ref={contentRef} style={{ flex: 1, overflowY: "auto", paddingBottom: 76 }}>
           {renderPage()}
         </main>
 
@@ -1301,7 +1316,7 @@ export default function App({ isEmbedded = false }) {
         )}
 
         {/* Bottom Nav — fixed at bottom */}
-        <nav style={{ flexShrink: 0, zIndex: 30, background: T.bgCard, borderTop: `1px solid ${T.border}` }}>
+        <nav style={{ position: "fixed", bottom: 0, left: 0, right: 0, maxWidth: 390, margin: "0 auto", zIndex: 30, background: T.bgCard, borderTop: `1px solid ${T.border}` }}>
           <div style={{ display: "flex", justifyContent: "space-around", padding: "6px 4px 10px" }}>
             {mainTabs.map(tab => {
               const active = tab.id === "more" ? (isMoreActive || showMore) : page === tab.id;
